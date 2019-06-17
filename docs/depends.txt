@@ -1,0 +1,3 @@
+Project depends on subprojects:
+
+uniconvertor   https://github.com/sk1project/uniconvertor
