@@ -33,6 +33,8 @@ VALUES = {
     'ULongLong': '--',
     'Float': '--',
     'Double': '--',
+    'Int24': '--',
+    'UInt24': '--',
 }
 
 ORDER = [
@@ -49,6 +51,8 @@ ORDER = [
     'ULongLong',
     'Float',
     'Double',
+    'Int24',
+    'UInt24',
 ]
 
 
@@ -85,6 +89,36 @@ class DecoderListModel(gtk.ListStore):
                 values['LongLong'], = struct.unpack(endian + 'q', bytes)
                 values['ULongLong'], = struct.unpack(endian + 'Q', bytes)
                 values['Double'], = struct.unpack(endian + 'd', bytes)
+            elif len(bytes) == 3:
+                if endian == '<':
+                    values['Int24'] = unpack_int24le(bytes)
+                    values['UInt24'] = unpack_uint24le(bytes)
+                else:
+                    values['Int24'] = unpack_int24be(bytes)
+                    values['UInt24'] = unpack_uint24be(bytes)
 
         for item in ORDER:
             self.append((item, values[item]))
+
+
+def unpack_uint24le(b):
+    b = bytearray(b)
+    return (b[0] & 0xFF) + ((b[1] & 0xFF) << 8) + ((b[2] & 0xFF) << 16)
+
+
+def unpack_uint24be(b):
+    b = bytearray(b)
+    return (b[2] & 0xFF) + ((b[1] & 0xFF) << 8) + ((b[0] & 0xFF) << 16)
+
+
+def unpack_int24le(b):
+    return signed24(unpack_uint24le(b))
+
+
+def unpack_int24be(b):
+    return signed24(unpack_uint24be(b))
+
+
+def signed24(v):
+    v &= 0xFFFFFF
+    return v - 0x1000000 if v & 0x800000 else v
