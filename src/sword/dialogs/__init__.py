@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2012-2019 by Igor E. Novikov
+# Copyright (C) 2012-2019 by Ihor E. Novikov
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ LOG = logging.getLogger(__name__)
 def about_dialog(parent):
     from license import LICENSE
     authors = [
-        "\nIgor E. Novikov (SWord, Gtk+ version; CDR Explorer, Tk version)\n\
+        "\nIhor E. Novikov (SWord, Gtk+ version; CDR Explorer, Tk version)\n\
         <sk1.project.org@gmail.com>",
     ]
 
