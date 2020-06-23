@@ -34,7 +34,7 @@ class ObjectTreeModel(gtk.TreeStore):
         iter = self.append(None)
         self.add_to_dict(self.model, iter)
         self.model_dict[iter] = self.model
-        icon_type, name, info = self.model.resolve()
+        icon_type, name, info = self.model.resolve()[:3]
         self.set(iter, 0, self.get_icon(icon_type),
                  1, name,
                  2, info,
@@ -45,7 +45,7 @@ class ObjectTreeModel(gtk.TreeStore):
     def scan_model(self, iter, obj):
         child_iter = self.append(iter)
         self.add_to_dict(obj, child_iter)
-        icon_type, name, info = obj.resolve()
+        icon_type, name, info = obj.resolve()[:3]
         self.set(child_iter, 0, self.get_icon(icon_type),
                  1, name,
                  2, info,
